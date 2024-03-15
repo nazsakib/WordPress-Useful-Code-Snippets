@@ -29,6 +29,7 @@ function restrict_dashboard_access() {
 add_action( 'admin_init', 'restrict_dashboard_access' );
 ```
 ## Hiding the WordPress Toolbar
+For subscribers only - 
 
 ```
 // Hide the WordPress toolbar for subscribers
@@ -38,6 +39,17 @@ function hide_admin_bar_for_subscribers() {
     }
 }
 add_action('after_setup_theme', 'hide_admin_bar_for_subscribers');
+
+```
+For all users except admin - 
+```
+// Hide the WordPress toolbar for all users except admin
+function hide_admin_bar_except_admin() {
+    if ( !current_user_can('administrator') ) {
+        add_filter('show_admin_bar', '__return_false');
+    }
+}
+add_action('after_setup_theme', 'hide_admin_bar_except_admin');
 
 ```
 ## Usage
