@@ -1,9 +1,7 @@
 
-# BreadcrumbsWordPress-Useful-Code-Snippets
+# WordPress-Useful-Code-Snippets
 
 Customize your site's functionality by use these code snippets.
-
-
 
 
 ## Description
