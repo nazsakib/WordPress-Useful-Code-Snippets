@@ -1,20 +1,15 @@
 
-# WordPress-role-customization
+# BreadcrumbsWordPress-Useful-Code-Snippets
 
-Customize user roles and permissions in WordPress to restrict dashboard access and hide the toolbar for specific user roles.
+Customize your site's functionality by use these code snippets.
 
 
 
 
 ## Description
 
-As I was building an LMS site for my client, I found these code snippets to be invaluable.
+These snippets made things easier for both admins and learners, making the website or platform more focused and user-friendly.
 
-The first one helped me restrict access to the WordPress dashboard, ensuring that only admins could manage the site's settings and content.
-
-The second snippet was equally useful as it allowed me to hide the WordPress toolbar, creating a cleaner interface for learners without distracting admin features.
-
-These snippets simplified the user experience for both administrators and learners, making the LMS platform more focused and user-friendly.
 ## Restricting Access to the WordPress Dashboard
 
 ```
@@ -52,6 +47,20 @@ function hide_admin_bar_except_admin() {
 add_action('after_setup_theme', 'hide_admin_bar_except_admin');
 
 ```
+## Disabling 'Updates Available' showing in the WordPress dahsboard plugins menu
+```
+function disable_showing_plugin_updates($value)
+{
+	if (isset($value) && is_object($value)) {
+        // Replace 'plugin-folder/plugin-file.php' with the actual path to the plugin you want to disable updates for
+		unset($value->response['plugin-folder/plugin-name.php']); // plugin one
+		unset($value->response['plugin-folder/plugin-name.php']); // plugin two
+	}
+	return $value;
+}
+add_filter('site_transient_showing_update_plugins', 'disable_plugin_updates');
+```
+
 ## Usage
 
 **Restricting Access to the WordPress Dashboard:**
@@ -65,6 +74,10 @@ Other user roles, such as subscribers or contributors, are redirected away from 
 This code snippet hides the WordPress toolbar, also known as the admin bar, for specific user roles.
 
 By implementing this snippet, users with designated roles, such as subscribers, won't see the toolbar when logged into the site frontend.
+
+**Disabling 'Updates Available' showing in the WordPress dahsboard plugins menu:**
+
+This PHP code snippet disables plugin update notifications for specific plugins in WordPress. It's particularly useful when you want to prevent certain plugins from being updated automatically.
 
 
 ## License
