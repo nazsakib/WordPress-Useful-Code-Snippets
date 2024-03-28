@@ -8,6 +8,15 @@ Customize your site's functionality by use these code snippets.
 
 These snippets made things easier for both admins and learners, making the website or platform more focused and user-friendly.
 
+# Index
+
+- [Restricting Access to the WordPress Dashboard](#restricting-access-to-the-wordpress-dashboard)
+- [Effective Restriction of Access to Theme Functions Without Obstructing Specific Function](#effective-restriction-of-access-to-theme-functions-without-obstructing-specific-function)
+- [Hiding the WordPress Toolbar](#hiding-the-wordpress-toolbar)
+- [Disabling Updates Available showing in the WordPress dahsboard plugins menu](#disabling_updates_available_showing_in_the_WordPress_dahsboard_plugins_menu)
+- [Usage](#usage)
+- [License](#license)
+
 ## Restricting Access to the WordPress Dashboard
 
 ```
@@ -21,6 +30,31 @@ function restrict_dashboard_access() {
 }
 add_action( 'admin_init', 'restrict_dashboard_access' );
 ```
+### Effective Restriction of Access to Theme Functions Without Obstructing Specific Function
+
+Recently, while completing an LMS site for a client, I utilized the above code snippet in the theme's functions.php file so that only the 'Admin' can see `siteurl.com/wp-admin`. 
+
+However, this snippet somehow conflicted with the LMS plugin I was using. Students were unable to submit their assignments, but the admin could. 
+
+Therefore, I replaced the above code with the following, and it now works perfectly. Students can submit their assignments while they cannot access the site's WordPress dashboard.
+
+```
+function restrict_dashboard_access() {
+    // Check if the current user is not an administrator and trying to access the dashboard
+    if (!current_user_can('manage_options') && strpos($_SERVER['REQUEST_URI'], 'wp-admin') !== false && strpos($_SERVER['REQUEST_URI'], 'admin-ajax.php') === false) {
+        // Check if the request is not for LMS Plugin related URLs
+        if (strpos($_SERVER['REQUEST_URI'], 'plugin_name') === false) {
+            // Redirect the user to the homepage
+            wp_redirect(home_url());
+            exit;
+        }
+    }
+}
+add_action('init', 'restrict_dashboard_access');
+
+```
+
+
 ## Hiding the WordPress Toolbar
 For subscribers only - 
 
@@ -45,7 +79,9 @@ function hide_admin_bar_except_admin() {
 add_action('after_setup_theme', 'hide_admin_bar_except_admin');
 
 ```
-## Disabling 'Updates Available' showing in the WordPress dahsboard plugins menu
+
+
+## Disabling Updates Available showing in the WordPress dahsboard plugins menu
 ```
 function disable_showing_plugin_updates($value)
 {
