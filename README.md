@@ -11,7 +11,7 @@ These snippets made things easier for both admins and learners, making the websi
 # Index
 
 - [Restricting Access to the WordPress Dashboard](#restricting-access-to-the-wordpress-dashboard)
-- [Effective Restriction of Access to Theme Functions Without Obstructing Specific Function](#effective-restriction-of-access-to-theme-functions-without-obstructing-specific-function)
+- [Restriction of Access to Theme Functions Without Stopping Specific Function](#restriction-of-access-to-theme-functions-without-stopping-specific-function)
 - [Hiding the WordPress Toolbar](#hiding-the-wordpress-toolbar)
 - [Disabling Updates Available showing in the WordPress dahsboard plugins menu](#disabling_updates_available_showing_in_the_WordPress_dahsboard_plugins_menu)
 - [Usage](#usage)
@@ -30,7 +30,7 @@ function restrict_dashboard_access() {
 }
 add_action( 'admin_init', 'restrict_dashboard_access' );
 ```
-### Effective Restriction of Access to Theme Functions Without Obstructing Specific Function
+### Restriction of Access to Theme Functions Without Stopping Specific Function
 
 Recently, while completing an LMS site for a client, I utilized the above code snippet in the theme's functions.php file so that only the 'Admin' can see `siteurl.com/wp-admin`. 
 
